@@ -4,6 +4,7 @@ import unittest
 import os
 import json
 import shutil
+import cdir
 
 class CdirTest(unittest.TestCase):
 
@@ -12,7 +13,6 @@ class CdirTest(unittest.TestCase):
         self._test_file = 'test_file.txt'
         self._config_file = 'config.json'
         self._dirs = [str(i) for i in range(5)]
-        self._dest_dir_index = 3
 
         os.mkdir(self._test_dir)
 
@@ -22,7 +22,7 @@ class CdirTest(unittest.TestCase):
 
 
     def _data(self):
-        return {'dest': self._dest_dir_index, 'src': self._test_file, 'dirs': self._dirs}
+        return {'src': self._path(self._test_file), 'dirs': [self._path(dir) for dir in self._dirs]}
 
 
     def _path(self, path):
@@ -50,4 +50,8 @@ class CdirTest(unittest.TestCase):
 
 
     def test_cdir(self):
-        self.assertTrue(True)
+        cdir.cdir_from_config(self._path(self._config_file))
+        for dir in self._dirs:
+            path_to_dir = self._path(dir)
+            path_to_file = os.path.join(path_to_dir, self._test_file)
+            self.assertTrue(os.path.isfile(path_to_file))
