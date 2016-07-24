@@ -12,5 +12,5 @@ def create_parser():
 
 
 if __name__ == "__main__":
-    args = create_parser()
+    args = create_parser().parse_args()
     cdir.cdir_from_config(args.config)

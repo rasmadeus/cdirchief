@@ -18,7 +18,7 @@ def _read_config(config_file):
         data = json.loads(config_file.read())
         _cdir(data['dirs'], data['src'])
     except ValueError as ex:
-        print(ex)
+        print('Cannot read config because {ex}'.format(ex=ex))
 
 
 def cdir_from_config(path_to_config):
